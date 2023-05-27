@@ -1,0 +1,76 @@
+.navbar-wrapper {
+  max-width: 100%;
+  padding-left: 24px;
+  padding-right: 24px;
+  justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
+  width: var(--page-width);
+}
+
+.logo {
+  width: 121px;
+  display: flex;
+}
+
+.logo-label {
+  height: 21px;
+  margin-left: 10px;
+  align-self: center;
+}
+
+.navbar {
+  position: relative;
+  height: 64px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-list {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.navbar-link-active {
+  font-variation-settings: "wght" 700;
+  font-size: 19px;
+  color: #545454;
+  border-bottom: 2px solid #545454;
+}
+
+.navbar-link {
+  font-variation-settings: "wght" 500;
+  font-size: 19px;
+  color: #545454;
+}
+
+.navbar-link:hover {
+  border-bottom: 2px solid #545454;
+  transition: all ease-in-out 0.2s;
+}
+
+.navbar-link:active {
+  font-variation-settings: "wght" 700;
+}
+
+.navbar-button-wrapper {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.navbar-button {
+  font-variation-settings: "wght" 300;
+  font-size: 14px;
+}
+
+.navbar-button:hover {
+  border-bottom: 1px solid #545454;
+}
+
+.navbar-link:active {
+  font-variation-settings: "wght" 500;
+}
