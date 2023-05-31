@@ -1,11 +1,7 @@
 .navbar-wrapper {
-  max-width: 100%;
-  padding-left: 24px;
-  padding-right: 24px;
   justify-content: space-around;
-  margin-left: auto;
-  margin-right: auto;
-  width: var(--page-width);
+  display: flex;
+  width: 100%;
 }
 
 .logo {
@@ -20,6 +16,8 @@
 }
 
 .navbar {
+  width: 100%;
+  justify-content: space-between;
   position: relative;
   height: 64px;
   display: flex;
@@ -56,8 +54,8 @@
 }
 
 .navbar-button-wrapper {
-  width: 30%;
   display: flex;
+  min-width: 133px;
   align-items: center;
   gap: 48px;
 }

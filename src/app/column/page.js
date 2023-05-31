@@ -1,3 +1,11 @@
+import ColumnTitle from "./columnTitle";
+import ColumnList from "./columnList";
+
 export default function Column() {
-  return <h1>ㅁㄴㅇㄹ</h1>;
+  return (
+    <div className="column-wrapper">
+      <ColumnTitle />
+      <ColumnList />
+    </div>
+  );
 }

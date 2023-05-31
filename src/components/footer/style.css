@@ -1,0 +1,44 @@
+.footer-wrapper {
+  justify-content: space-around;
+  align-items: flex-start;
+  display: flex;
+  width: 100%;
+}
+
+.footer-logo {
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+.footer-content {
+  width: 100%;
+}
+
+.footer-grid {
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border-bottom: 1px dashed #bbbbbb;
+  gap: 5px;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  color: #808080;
+  margin: 0 5px;
+}
+
+.footer-link:last-child::after {
+  content: none;
+}
+
+.footer-stack {
+  padding-top: 24px;
+  padding-bottom: 36px;
+  font-size: 13px;
+  color: #808080;
+}
