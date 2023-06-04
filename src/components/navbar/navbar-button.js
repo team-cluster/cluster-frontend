@@ -1,5 +1,6 @@
 import Link from "next/link";
 import "./style.css";
+import NavHam from "./navbar-hamburger";
 
 export default function NavbarButton() {
   return (

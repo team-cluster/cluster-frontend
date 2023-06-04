@@ -7,6 +7,15 @@
   --layout-margin: ;
 }
 
+@font-face {
+  font-family: "Gungseo";
+  src: url("/src/app/fonts/ChosunGs.ttf") format("ttf");
+}
+
+.gs {
+  font-family: "Gungseo";
+}
+
 * {
   box-sizing: border-box;
 }

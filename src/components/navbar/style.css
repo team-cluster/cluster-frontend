@@ -7,6 +7,7 @@
 .logo {
   width: 121px;
   display: flex;
+  flex-shrink: 0;
 }
 
 .logo-label {
@@ -19,7 +20,7 @@
   width: 100%;
   justify-content: space-between;
   position: relative;
-  height: 64px;
+  min-height: 64px;
   display: flex;
   align-items: center;
 }
@@ -29,6 +30,14 @@
   display: flex;
   align-items: center;
   gap: 60px;
+}
+
+.navbar-list-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  flex: wrap;
 }
 
 .navbar-link-active {
@@ -57,6 +66,7 @@
   display: flex;
   min-width: 133px;
   align-items: center;
+  justify-content: space-between;
   gap: 48px;
 }
 
@@ -71,4 +81,43 @@
 
 .navbar-link:active {
   font-variation-settings: "wght" 500;
+}
+
+.navham {
+  display: none;
+}
+
+.navbar-list-mobile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* mobile responsive navbar */
+@media screen and (max-width: 700px) {
+  .navbar-list-group {
+    display: none;
+  }
+
+  .navbar-button-wrapper {
+    display: none;
+  }
+
+  .navham {
+    display: flex;
+    margin-left: auto;
+    padding-top: auto;
+  }
+  .navbar-list {
+    flex-wrap: wrap;
+  }
+}
+
+.hideMenuList {
+  display: none;
+}
+
+.showMenuList {
+  display: flex;
+  flex-direction: column;
 }
