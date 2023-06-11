@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko">
       <body className={pretendard.className}>
-        <header className="header">
+        <header className="header sticky top-0 z-50">
           <div className="geist-wrapper">
             <Navbar />
           </div>

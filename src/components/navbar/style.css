@@ -1,7 +1,10 @@
 .navbar-wrapper {
-  justify-content: space-around;
-  display: flex;
   width: 100%;
+  min-height: 64px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background-color: white;
 }
 
 .logo {
@@ -17,10 +20,10 @@
 }
 
 .navbar {
+  margin-top: 16px;
   width: 100%;
   justify-content: space-between;
   position: relative;
-  min-height: 64px;
   display: flex;
   align-items: center;
 }
@@ -64,13 +67,14 @@
 
 .navbar-button-wrapper {
   display: flex;
-  min-width: 133px;
+  min-width: 60px;
   align-items: center;
   justify-content: space-between;
-  gap: 48px;
+  margin-left: auto;
 }
 
-.navbar-button {
+.navbar-button,
+.navbar-userinfo {
   font-variation-settings: "wght" 300;
   font-size: 14px;
 }
@@ -83,7 +87,7 @@
   font-variation-settings: "wght" 500;
 }
 
-.navham {
+.navbar-mobile-buttons {
   display: none;
 }
 
@@ -91,10 +95,11 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin-top: -50px;
 }
 
 /* mobile responsive navbar */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
   .navbar-list-group {
     display: none;
   }
@@ -103,8 +108,11 @@
     display: none;
   }
 
-  .navham {
+  .navbar-mobile-buttons {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
     margin-left: auto;
     padding-top: auto;
   }

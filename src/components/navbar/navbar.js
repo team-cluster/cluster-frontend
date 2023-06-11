@@ -4,7 +4,7 @@ import "./style.css";
 
 export default function NavBar() {
   return (
-    <div className="navbar-wrapper">
+    <div className="navbar-wrapper ">
       <nav className="navbar">
         <NavbarList />
         <NavbarButton />

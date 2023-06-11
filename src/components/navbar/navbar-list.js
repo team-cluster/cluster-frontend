@@ -13,6 +13,7 @@ const navRoutes = [
   { label: "정오표", route: "/correction" },
   { label: "배포", route: "/release" },
   { label: "칼럼", route: "/column" },
+  { label: "팀원모집", route: "/recruit" },
 ];
 
 export default function NavbarList() {
@@ -21,6 +22,8 @@ export default function NavbarList() {
   const genericHamburgerLine =
     "h-1 w-6 my-px rounded-full bg-black transition ease transform duration-300";
   const pathname = usePathname();
+
+  const isLogined = true;
 
   return (
     <div className="navbar-list">
@@ -41,31 +44,40 @@ export default function NavbarList() {
         />
       </Link>
 
-      <div className="navham">
-        <button
-          className="flex flex-col h-8 w-8 justify-center items-center group cursor-pointer"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <div
-            className={`${genericHamburgerLine} ${
-              isOpen
-                ? "rotate-45 translate-y-1.5 opacity-50 group-hover:opacity-100"
-                : "opacity-50 group-hover:opacity-100"
-            }`}
-          />
-          <div
-            className={`${genericHamburgerLine} ${
-              isOpen ? "opacity-0" : "opacity-50 group-hover:opacity-100"
-            }`}
-          />
-          <div
-            className={`${genericHamburgerLine} ${
-              isOpen
-                ? "-rotate-45 -translate-y-1.5 opacity-50 group-hover:opacity-100"
-                : "opacity-50 group-hover:opacity-100"
-            }`}
-          />
-        </button>
+      <div className="navbar-mobile-buttons">
+        <div className="navbar-userinfo">
+          {isLogined ? (
+            <Link href="/member/login">로그인</Link>
+          ) : (
+            <Link href="/member">마이페이지</Link>
+          )}
+        </div>
+        <div className="navham">
+          <button
+            className="flex flex-col h-8 w-8 justify-center items-center group cursor-pointer"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <div
+              className={`${genericHamburgerLine} ${
+                isOpen
+                  ? "rotate-45 translate-y-1.5 opacity-50 group-hover:opacity-100"
+                  : "opacity-50 group-hover:opacity-100"
+              }`}
+            />
+            <div
+              className={`${genericHamburgerLine} ${
+                isOpen ? "opacity-0" : "opacity-50 group-hover:opacity-100"
+              }`}
+            />
+            <div
+              className={`${genericHamburgerLine} ${
+                isOpen
+                  ? "-rotate-45 -translate-y-1.5 opacity-50 group-hover:opacity-100"
+                  : "opacity-50 group-hover:opacity-100"
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
       <div className={isOpen ? "navbar-list-mobile" : "navbar-list-group"}>
