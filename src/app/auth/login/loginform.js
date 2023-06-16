@@ -3,22 +3,43 @@
 import { useForm } from "react-hook-form";
 import { FaRegEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
-
 import Link from "next/link";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useCallback, useState } from "react";
 
 export function LoginForm() {
+  const [success, setSuccess] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, isDirty, errors },
   } = useForm();
 
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
+  const onSubmit = useCallback(
+    async (data) => {
+      console.log(executeRecaptcha);
+      if (!executeRecaptcha) {
+        console.log("Execute recaptcha not yet available");
+        return;
+      }
+
+      const token = await executeRecaptcha("signinsubmit");
+      data.captchaToken = token;
+      console.log(token);
+      await new Promise((r) => setTimeout(r, 1000));
+      //api 요청 후 검사하기
+      setSuccess(true);
+      alert(JSON.stringify(data));
+      return token;
+    },
+    [executeRecaptcha]
+  );
+
   return (
     <form
-      onSubmit={handleSubmit(async (data) => {
-        await new Promise((r) => setTimeout(r, 1000));
-        alert(JSON.stringify(data));
-      })}
+      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col items-center"
     >
       <div className="bg-gray-100 p-2 flex items-center mb-1">

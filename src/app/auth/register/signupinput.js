@@ -21,8 +21,8 @@ const SignupStyle = {
 };
 
 function EmailInput() {
-  const { label, description, placeholder, type } = email_validation;
-  const id = "signupemail";
+  const { id, label, description, placeholder, type, validation, available } =
+    email_validation;
   const {
     register,
     formState: { errors },
@@ -49,17 +49,13 @@ function EmailInput() {
         placeholder={placeholder}
         className={SignupStyle.input}
         {...register(id, {
-          required: "이메일은 필수 입력 항목입니다.",
-          pattern: {
-            value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-            message: "제대로 된 이메일을 입력해주세요.",
-          },
+          ...validation,
         })}
       />
       {!errors.signupemail && getValues().signupemail && (
         <small className="text-green-500 flex justify-start w-full mb-2 items-center">
           <BsCheckLg />
-          <span className="ml-1">이 이메일로 가입됩니다.</span>
+          <span className="ml-1">{available}</span>
         </small>
       )}
     </div>
@@ -67,15 +63,21 @@ function EmailInput() {
 }
 
 function PasswordInput() {
-  const { label, description, placeholder, type } = password_validation;
-  const id = "signuppassword";
-  const id_check = "signuppasswordconfirm";
-  const confirm_placeholder = "비밀번호를 다시 입력해주세요";
+  const {
+    id,
+    label,
+    description,
+    placeholder,
+    type,
+    validation,
+    confirm,
+    available,
+  } = password_validation;
   const {
     register,
     formState: { errors },
     getValues,
-  } = useFormContext({ mode: "all" });
+  } = useFormContext();
 
   return (
     <div className={SignupStyle.wrapper}>
@@ -103,19 +105,7 @@ function PasswordInput() {
         placeholder={placeholder}
         className={SignupStyle.input}
         {...register(id, {
-          required: "비밀번호는 필수 입력 항목입니다.",
-          pattern: {
-            value: /^(.*)$/,
-            message: "비밀번호 형식에 맞지 않습니다.",
-          },
-          minLength: {
-            value: 8,
-            message: "최소 8자 이상의 비밀번호를 입력해주세요.",
-          },
-          maxLength: {
-            value: 24,
-            message: "비밀번호는 최대 24자까지 입력할 수 있습니다.",
-          },
+          ...validation,
         })}
       />
       {errors.signuppasswordconfirm && (
@@ -127,18 +117,16 @@ function PasswordInput() {
         </small>
       )}
       <input
-        id={id_check}
+        id={confirm.id}
         type={type}
-        placeholder={confirm_placeholder}
+        placeholder={confirm.placeholder}
         className={SignupStyle.input}
-        {...register(id_check, {
-          required: "비밀번호를 확인해주세요.",
+        {...register(confirm.id, {
+          required: confirm.validation.required,
           validate: {
             matchesPreviousPassword: (value) => {
               const { signuppassword } = getValues();
-              return (
-                signuppassword === value || "비밀번호가 일치하지 않습니다."
-              );
+              return signuppassword === value || confirm.validation.check;
             },
           },
         })}
@@ -149,7 +137,7 @@ function PasswordInput() {
         getValues().signuppasswordconfirm && (
           <small className="text-green-500 flex justify-start w-full mb-2 items-center">
             <BsCheckLg />
-            <span className="ml-1">이 비밀번호로 가입됩니다.</span>
+            <span className="ml-1">{available}</span>
           </small>
         )}
     </div>
@@ -220,24 +208,41 @@ function NicknameInput() {
 function PhoneNumberVerificationInput() {}
 
 function TermsOfServiceCheckbox() {
-  const { register } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
   return (
-    <label className="flex items-center text-m mt-5 mb-5">
-      <input
-        type="checkbox"
-        name="toecheck"
-        className="mr-1"
-        {...register("toecheck")}
-      />
-      <Link href="#" className="font-bold underline mr-1">
-        이용약관
-      </Link>
-      및
-      <Link href="#" className="font-bold underline ml-1">
-        개인정보처리방침
-      </Link>
-      에 동의합니다.
-    </label>
+    <div className="flex flex-col items-center mt-5 mb-5">
+      <label className="text-m">
+        <input
+          type="checkbox"
+          name="toecheck"
+          className="mr-1"
+          {...register("toecheck", {
+            required:
+              "이용약관 및 개인정보처리방침에 동의하지 않으면 회원가입이 불가합니다.",
+          })}
+        />
+        <Link href="#" className="font-bold underline mr-1">
+          이용약관
+        </Link>
+        및
+        <Link href="#" className="font-bold underline ml-1">
+          개인정보처리방침
+        </Link>
+        에 동의합니다.
+      </label>
+      {errors.toecheck && (
+        <small
+          role="alert"
+          className="text-red-500 flex justify-start w-full mb-2 mt-1"
+        >
+          {errors.toecheck.message}
+        </small>
+      )}
+    </div>
   );
 }
 

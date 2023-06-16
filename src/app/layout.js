@@ -26,9 +26,7 @@ export default function RootLayout({ children }) {
             <Navbar />
           </div>
         </header>
-        <main className="content-main">
-          <div className="geist-wrapper">{children}</div>
-        </main>
+        <main className="content-main">{children}</main>
         <footer className="footer">
           <div className="geist-wrapper">
             <Footer />

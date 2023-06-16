@@ -1,10 +1,7 @@
-import { FaRegEnvelope } from "react-icons/fa";
-import { MdLockOutline } from "react-icons/md";
-import Link from "next/link";
-import SignupForm from "./signupform";
+"use client";
 
-const emailRegex =
-  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/;
+import SignupForm from "./signupform";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 export default function Register() {
   return (
@@ -13,7 +10,9 @@ export default function Register() {
         <div className="text-4xl font-extrabold">회원가입</div>
       </div>
       <div className="border-2 border-black w-12 inline-block mb-8"></div>
-      <SignupForm />
+      <GoogleReCaptchaProvider reCaptchaKey={process.env.RECAPTCHA_WEB_KEY}>
+        <SignupForm />
+      </GoogleReCaptchaProvider>
     </div>
   );
 }
