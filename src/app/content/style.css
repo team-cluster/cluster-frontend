@@ -14,27 +14,6 @@
   background-size: 200px 200px;
 }
 
-.back-title {
-  display: flex;
-}
-
-.double-direction {
-  display: flex;
-  justify-content: center;
-}
-
-.black-triangle {
-  position: relative;
-  left: 20px;
-  border-top: 64px solid transparent;
-  border-left: 96px solid black;
-  border-bottom: 64px solid transparent;
-}
-
-.white-triangle {
-  position: relative;
-  left: 20px;
-  border-top: 64px solid transparent;
-  border-left: 96px solid white;
-  border-bottom: 64px solid transparent;
+:root {
+  --single-content-default-height: 400px;
 }
