@@ -19,12 +19,14 @@ const REGISTER_MUTATION = gql`
     $email: String!
     $password: String!
     $passwordCheck: String!
+    $recaptchaToken: String!
   ) {
     register(
       name: $name
       email: $email
       password: $password
       passwordCheck: $passwordCheck
+      recaptchaToken: $recaptchaToken
     ) {
       __typename
     }

@@ -10,8 +10,16 @@ import { useCallback, useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 
 const LOGIN_MUTATION = gql`
-  mutation Register($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
+  mutation Register(
+    $username: String!
+    $password: String!
+    $recaptchaToken: String!
+  ) {
+    login(
+      username: $username
+      password: $password
+      recaptchaToken: $recaptchaToken
+    ) {
       __typename
     }
   }
