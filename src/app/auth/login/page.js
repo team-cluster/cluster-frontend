@@ -27,7 +27,7 @@ function LoginPage() {
       <div className="bg-black flex items-center justify-center w-96 max-w-4xl shadow-2xl">
         <div className="p-5">
           <Link
-            href="/auth/register"
+            href="/auth/signup"
             className="border-2 border-white text-white rounded-xl px-12 py-2 inline-block font-semibold hover:bg-white hover:text-black"
           >
             회원가입

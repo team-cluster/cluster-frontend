@@ -5,36 +5,86 @@ import { FaRegEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import Link from "next/link";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+
+import { gql, useMutation } from "@apollo/client";
+
+const LOGIN_MUTATION = gql`
+  mutation Register($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      __typename
+    }
+  }
+`;
 
 export function LoginForm() {
   const [success, setSuccess] = useState(false);
+  const methods = useForm();
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, isDirty, errors },
-  } = useForm();
+  } = methods;
+  const [mutation, loginInfo] = useMutation(LOGIN_MUTATION);
 
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const onSubmit = useCallback(
-    async (data) => {
-      console.log(executeRecaptcha);
+    async (data, e) => {
+      await e.preventDefault();
+
       if (!executeRecaptcha) {
+        alert("캡챠가 인증되지 않았습니다.");
+        methods.reset();
         console.log("Execute recaptcha not yet available");
         return;
       }
 
+      const loginError = loginInfo.error;
+
+      const loginData = (
+        await mutation({
+          variables: {
+            username: data.email,
+            password: data.password,
+          },
+        })
+      ).data;
+
+      if (
+        loginError ||
+        (loginData && loginData.login.__typename === "LoginFailed")
+      ) {
+        alert("존재하지 않는 이메일이거나 비밀번호가 틀렸습니다");
+        methods.reset();
+        return;
+      }
+
+      if (loginData && loginData.login.__typename === "InactiveUser") {
+        alert("이메일 인증이 되지 않은 이메일입니다. 이메일을 확인해주세요.");
+        methods.reset();
+        return;
+      }
+
+      if (loginData && loginData.login.__typename === "LoginSuccess") {
+        setSuccess(true);
+        alert("로그인 성공!");
+        methods.reset();
+        router.push("/");
+        return;
+      }
+
+      /*
       const token = await executeRecaptcha("signinsubmit");
       data.captchaToken = token;
-      console.log(token);
       await new Promise((r) => setTimeout(r, 1000));
       //api 요청 후 검사하기
       setSuccess(true);
       alert(JSON.stringify(data));
-      return token;
+      return token;*/
     },
-    [executeRecaptcha]
+    [executeRecaptcha, loginInfo]
   );
 
   return (

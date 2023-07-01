@@ -48,18 +48,18 @@ export default function SignupForm() {
         return;
       }
 
-      await registerMutation({
-        variables: {
-          name: inputdata.signupnickname,
-          email: inputdata.signupemail,
-          password: inputdata.signuppassword,
-          passwordCheck: inputdata.signuppasswordconfirm,
-        },
-      });
+      const registerData = (
+        await registerMutation({
+          variables: {
+            name: inputdata.signupnickname,
+            email: inputdata.signupemail,
+            password: inputdata.signuppassword,
+            passwordCheck: inputdata.signuppasswordconfirm,
+          },
+        })
+      ).data;
 
       const registerError = registerInfo.error;
-      const registerData = registerInfo.data;
-      const registerLoading = registerInfo.loading;
 
       if (
         registerError ||
