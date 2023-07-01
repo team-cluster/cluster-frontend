@@ -43,7 +43,7 @@ export function LoginForm() {
       await e.preventDefault();
 
       if (!executeRecaptcha) {
-        alert("캡챠가 인증되지 않았습니다.");
+        alert("캡챠가 활성화되지 않았습니다.");
         methods.reset();
         console.log("Execute recaptcha not yet available");
         return;

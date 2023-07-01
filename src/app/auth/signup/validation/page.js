@@ -16,23 +16,27 @@ export default async function ValidationPage() {
   const validationNumber = searchParams.get("verificationCode");
   const email = searchParams.get("email");
 
-  const [mutation, { data, error }] = useMutation(VALIDATE_MUTATION);
+  const [mutation, validationInfo] = useMutation(VALIDATE_MUTATION);
 
   let resultmsg = "당신 뭔짓하는거야";
 
   if (validationNumber && email) {
-    if (error || !data || !data.verifyEmail) {
+    if (error || !validationInfo || !validationInfo.data) {
       resultmsg = "이메일 인증하는데 오류가 발생했습니다.";
       return;
     } else {
-      await mutation({
-        variables: {
-          email: email,
-          validationCode: validationNumber,
-        },
-      });
+      const validationData = (
+        await mutation({
+          variables: {
+            email: email,
+            validationCode: validationNumber,
+          },
+        })
+      ).data;
 
-      if (data.verifyEmail.__typename === "EmailVerificationSuccess") {
+      if (
+        validationData.verifyEmail.__typename === "EmailVerificationSuccess"
+      ) {
         resultmsg = "이메일 인증에 성공했습니다. 환영합니다!";
       } else {
         resultmsg = "이메일 인증을 실패했습니다.";
@@ -41,6 +45,6 @@ export default async function ValidationPage() {
   }
 
   return (
-    <div className="h-screenitems-center font-bold text-xl">{resultmsg}</div>
+    <div className="h-screen items-center font-bold text-xl">{resultmsg}</div>
   );
 }
