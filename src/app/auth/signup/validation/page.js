@@ -21,7 +21,7 @@ export default async function ValidationPage() {
   let resultmsg = "당신 뭔짓하는거야";
 
   if (validationNumber && email) {
-    if (error || !validationInfo || !validationInfo.data) {
+    if (validationInfo.error || !validationInfo || !validationInfo.data) {
       resultmsg = "이메일 인증하는데 오류가 발생했습니다.";
       return;
     } else {
