@@ -9,11 +9,27 @@ import mockimage2 from "/public/page/clmock_2.png";
 import mockimage3 from "/public/page/clmock_3.png";
 
 import TextTransition, { presets } from "react-text-transition";
+import { HiExternalLink } from "react-icons/hi";
 
 export default function ClusterMock() {
   return (
     <div className="flex w-full flex-wrap float-shadow rounded-xl">
       <ClusterMockContentWrapper />
+    </div>
+  );
+}
+
+function PurchaseLink() {
+  return (
+    <div className="flex m-3">
+      <a
+        href="https://atom.ac/books/11108"
+        className="text-lg underline font-bold"
+        target="_blank"
+      >
+        구매하기
+      </a>
+      <HiExternalLink />
     </div>
   );
 }
@@ -93,6 +109,7 @@ function HoverBeforeTitle({ opened }) {
           {ClusterMockSeriesCopy.descriptions}
         </h3>
       </div>
+      <PurchaseLink />
     </div>
   );
 }
@@ -127,7 +144,7 @@ function HoverAfterContents({ opened }) {
 
 function MockImagesforMobile() {
   return (
-    <div className="flex shrink-0 md:w-2/5 md:h-96 w-44 h-72 md:m-4 md:pt-0 pt-12">
+    <div className="flex shrink-0 md:w-1/3 md:h-96 w-44 h-72 md:m-4 md:pt-0 pt-12">
       <div className="w-full relative">
         <Image
           src={mockimage3}

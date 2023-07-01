@@ -6,11 +6,27 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import massiveche1 from "/public/page/massive_che1.png";
 import massivephy1 from "/public/page/massive_phy1.png";
+import { HiExternalLink } from "react-icons/hi";
 
 export default function Massive() {
   return (
     <div className="flex w-full flex-wrap float-shadow rounded-xl">
       <MassiveContentWrapper />
+    </div>
+  );
+}
+
+function PurchaseLink() {
+  return (
+    <div className="flex m-3">
+      <a
+        href="https://atom.ac/books/11018"
+        className="text-lg underline font-bold"
+        target="_blank"
+      >
+        구매하기
+      </a>
+      <HiExternalLink />
     </div>
   );
 }
@@ -54,7 +70,7 @@ function DetailedExplaination({ opened }) {
 
 function MoreButton({ opened }) {
   return (
-    <span className="m-4 w-20 h-10 flex justify-center items-center">
+    <span className="m-4 w-20 h-6 flex justify-center items-center">
       {opened ? (
         <BsChevronCompactUp size="40" />
       ) : (
@@ -72,7 +88,7 @@ function HoverBeforeTitle({ opened }) {
   };
   return (
     <div
-      className="flex flex-col justify-center items-center content-shrink"
+      className="h-full flex flex-col justify-center items-center content-shrink"
       style={opened ? { height: "0px" } : { height: "240px" }}
     >
       <div className="pt-12 upper-subtitle-wrapper">
@@ -81,7 +97,7 @@ function HoverBeforeTitle({ opened }) {
         </h2>
       </div>
       <div className="main-title-wrapper">
-        <h1 className="md:text-9xl text-5xl font-bold title-gradient-massive">
+        <h1 className="md:text-8xl text-5xl font-bold title-gradient-massive">
           {MassiveCopy.title}
         </h1>
       </div>
@@ -90,6 +106,7 @@ function HoverBeforeTitle({ opened }) {
           {MassiveCopy.descriptions}
         </h3>
       </div>
+      <PurchaseLink />
     </div>
   );
 }

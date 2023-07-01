@@ -7,11 +7,27 @@ import Image from "next/image";
 import mechanica1 from "/public/page/mechanica_1.png";
 import mechanica2 from "/public/page/mechanica_2.png";
 import mechanica3 from "/public/page/mechanica_3.png";
+import { HiExternalLink } from "react-icons/hi";
 
 export default function Mechanica() {
   return (
     <div className="flex w-full flex-wrap float-shadow rounded-xl">
       <MechanicaContentWrapper />
+    </div>
+  );
+}
+
+function PurchaseLink() {
+  return (
+    <div className="flex m-3">
+      <a
+        href="https://atom.ac/books/11271"
+        className="text-lg underline font-bold"
+        target="_blank"
+      >
+        구매하기
+      </a>
+      <HiExternalLink />
     </div>
   );
 }
@@ -85,7 +101,7 @@ function HoverBeforeTitle({ opened }) {
         </h2>
       </div>
       <div className="main-title-wrapper">
-        <h1 className="md:text-9xl text-5xl font-bold title-gradient-mechanica">
+        <h1 className="md:text-8xl text-5xl font-bold title-gradient-mechanica">
           {MechanicaCopy.title}
         </h1>
       </div>
@@ -97,6 +113,7 @@ function HoverBeforeTitle({ opened }) {
           </span>
         </h3>
       </div>
+      <PurchaseLink />
     </div>
   );
 }

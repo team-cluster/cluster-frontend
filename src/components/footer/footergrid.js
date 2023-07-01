@@ -19,10 +19,6 @@ const footerRoutes = [
     label: "배포",
     route: "/release",
   },
-  {
-    label: "칼럼",
-    route: "/column",
-  },
 ];
 
 export default function FooterGrid() {

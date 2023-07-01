@@ -2,6 +2,7 @@
 
 import { useForm, FormProvider } from "react-hook-form";
 import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import {
   EmailInput,
@@ -10,25 +11,90 @@ import {
   phoneNumberVerificationInput,
   TermsOfServiceCheckbox,
 } from "./signupinput";
+import { gql, useMutation } from "@apollo/client";
+
+const REGISTER_MUTATION = gql`
+  mutation Register(
+    $name: String!
+    $email: String!
+    $password: String!
+    $passwordCheck: String!
+  ) {
+    register(
+      name: $name
+      email: $email
+      password: $password
+      passwordCheck: $passwordCheck
+    ) {
+      __typename
+    }
+  }
+`;
 
 export default function SignupForm() {
   const { executeRecaptcha } = useGoogleReCaptcha();
+  const router = useRouter();
   const methods = useForm({ mode: "all" });
   const [success, setSuccess] = useState(false);
+  const [registerMutation, registerInfo] = useMutation(REGISTER_MUTATION);
 
   const onSubmit = useCallback(
-    async (data) => {
+    async (inputdata, e) => {
+      e.preventDefault();
       if (!executeRecaptcha) {
+        alert("캡챠가 인증되지 않았습니다.");
+        methods.reset();
         console.log("Execute recaptcha not yet available");
         return;
       }
 
+      await registerMutation({
+        variables: {
+          name: inputdata.signupnickname,
+          email: inputdata.signupemail,
+          password: inputdata.signuppassword,
+          passwordCheck: inputdata.signuppasswordconfirm,
+        },
+      });
+
+      const registerError = registerInfo.error;
+      const registerData = registerInfo.data;
+      const registerLoading = registerInfo.loading;
+
+      if (
+        registerError ||
+        (registerData && registerData.register.__typename === "RegisterError")
+      ) {
+        alert("회원가입 하는데 오류가 발생했습니다.");
+        methods.reset();
+        return;
+      }
+
+      if (
+        registerData &&
+        registerData.register.__typename === "RegisterEmailDuplicatedeError"
+      ) {
+        alert("이미 등록된 이메일입니다.");
+        methods.reset();
+        return;
+      }
+
+      if (
+        registerData &&
+        registerData.register.__typename === "RegisterSuccess"
+      ) {
+        setSuccess(true);
+        alert("해당 이메일로 인증 링크를 보냈습니다. 확인해주세요.");
+        methods.reset();
+        router.push("/");
+        return;
+      }
+
       const token = await executeRecaptcha("signupsubmit");
-      data.captchaToken = token;
+      inputdata.captchaToken = token;
       await new Promise((r) => setTimeout(r, 1000));
       methods.reset();
-      setSuccess(true);
-      alert(JSON.stringify(data));
+      alert(JSON.stringify(inputdata));
       return token;
     },
     [executeRecaptcha]
@@ -56,6 +122,7 @@ export default function SignupForm() {
         >
           가입할래요
         </button>
+        {}
       </form>
     </FormProvider>
   );

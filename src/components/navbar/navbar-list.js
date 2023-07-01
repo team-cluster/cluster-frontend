@@ -12,7 +12,6 @@ const navRoutes = [
   { label: "컨텐츠", route: "/content" },
   { label: "정오표", route: "/correction" },
   { label: "배포", route: "/release" },
-  { label: "칼럼", route: "/column" },
   { label: "팀원모집", route: "/recruit" },
 ];
 

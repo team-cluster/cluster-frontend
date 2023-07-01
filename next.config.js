@@ -5,6 +5,7 @@ const nextConfig = {
   },
   env: {
     RECAPTCHA_WEB_KEY: process.env.RECAPTCHA_WEB_KEY,
+    GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT,
   },
 };
 

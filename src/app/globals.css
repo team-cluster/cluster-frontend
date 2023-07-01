@@ -69,3 +69,50 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
+
+.upper-title {
+  height: 700px;
+}
+
+.bg-logo-img-size {
+  width: 400px;
+  height: 400px;
+}
+
+@media (min-width: 768px) {
+  .bg-logo-img-size {
+    width: 500px;
+    height: 500px;
+  }
+}
+.title-gradient {
+  --bg-size: 400%;
+  --color-one: rgb(99 102 241);
+  --color-two: rgb(244 114 182);
+  background: linear-gradient(
+      90deg,
+      var(--color-one),
+      var(--color-two),
+      var(--color-one)
+    )
+    0 0 / 90% 100%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: move-bg 3s linear infinite;
+}
+
+@keyframes move-bg {
+  to {
+    background-position: 900% 0;
+  }
+}
+
+.float-shadow {
+  width: 100%;
+  filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.25));
+}
+
+.content-shadow {
+  filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.25));
+}

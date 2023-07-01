@@ -54,6 +54,7 @@
   font-variation-settings: "wght" 500;
   font-size: 19px;
   color: #545454;
+  display: flex;
 }
 
 .navbar-link:hover {
@@ -62,6 +63,7 @@
 }
 
 .navbar-link:active {
+  display: flex;
   font-variation-settings: "wght" 700;
 }
 
@@ -81,10 +83,6 @@
 
 .navbar-button:hover {
   border-bottom: 1px solid #545454;
-}
-
-.navbar-link:active {
-  font-variation-settings: "wght" 500;
 }
 
 .navbar-mobile-buttons {
