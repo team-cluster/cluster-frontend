@@ -13,7 +13,7 @@ const footerRoutes = [
   },
   {
     label: "정오표",
-    route: "/correction",
+    route: "/errata",
   },
   {
     label: "배포",
