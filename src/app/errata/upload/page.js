@@ -3,6 +3,28 @@
 
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { useCallback, useState } from "react";
+import { gql, useMutation } from "@apollo/client";
+
+const REGISTER_MUTATION = gql`
+  mutation Errata(
+    $description: String!
+    $file: String!
+    $image: String!
+    $title: String!
+    $link: String!
+  ) {
+    createErrata(
+      description: $description
+      file: $file
+      image: $image
+      title: $title
+      link: $link
+    ) {
+      __typename
+    }
+  }
+`;
+
 const SignupStyle = {
   wrapper: "flex flex-col w-full py-3",
   label: "text-xl font-semibold mb-2",
@@ -20,10 +42,29 @@ export default function CorrectionUpload() {
     formState: { isSubmitting, errors },
   } = methods;
 
+  const [mutation, uploadInfo] = useMutation(REGISTER_MUTATION);
+
   const onSubmit = useCallback(async (data, e) => {
     e.preventDefault();
     console.log(data);
-    alert(JSON.stringify(data));
+
+    const uploadData = (
+      await mutation({
+        variables: {
+          title: data.bookTitle,
+          description: data.bookDescription,
+          file: data.bookFile,
+          link: data.bookReportLink,
+          image: data.bookcoverimg,
+        },
+      })
+    ).data;
+
+    if (uploadData && uploadData.createErrata.__typename === "ErrataCreated") {
+      alert("파일을 성공적으로 업로드했습니다.");
+    } else {
+      alert("파일 업로드에 실패했습니다.");
+    }
   });
 
   return (
@@ -177,12 +218,12 @@ function UploadForm() {
           </small>
         )}
         <input
-          type="file"
+          type="text"
           id="bookFile"
           placeholder="https://atom.ac/..."
           className={SignupStyle.input}
           {...register("bookFile", {
-            required: "정오표 파일을 업로드해주세요.",
+            required: "정오표 파일 링크를 입력해주세요.",
           })}
         />
       </div>
@@ -225,12 +266,12 @@ function UploadForm() {
           </small>
         )}
         <input
-          type="file"
+          type="text"
           id="bookcoverimg"
           placeholder="https://forms.google.com/..."
           className={SignupStyle.input}
           {...register("bookcoverimg", {
-            required: "이미지 파일을 업로드해주세요.",
+            required: "이미지 파일 링크를 입력해주세요.",
           })}
         />
       </div>

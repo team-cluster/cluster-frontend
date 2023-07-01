@@ -14,6 +14,7 @@
     "dotenv": "^16.1.4",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
+    "graphql-upload": "^16.0.2",
     "next": "13.4.5",
     "particles.js": "^2.0.0",
     "react": "18.2.0",
