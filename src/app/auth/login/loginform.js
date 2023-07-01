@@ -6,6 +6,7 @@ import { MdLockOutline } from "react-icons/md";
 import Link from "next/link";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { gql, useMutation } from "@apollo/client";
 
@@ -28,6 +29,7 @@ const LOGIN_MUTATION = gql`
 export function LoginForm() {
   const [success, setSuccess] = useState(false);
   const methods = useForm();
+  const router = useRouter();
 
   const {
     register,
