@@ -52,7 +52,7 @@ function CorrectionContent() {
             return (
               <div
                 className="py-8 border-b hover:shadow-lg hover:transition-shadow "
-                key="i"
+                key={i}
               >
                 <div className="geist-wrapper flex md:flex-row flex-col md:gap-0 gap-5 md:justify-between justify-center items-center">
                   <div className="flex flex-col justify-center gap-3">
