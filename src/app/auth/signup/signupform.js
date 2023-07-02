@@ -50,6 +50,10 @@ export default function SignupForm() {
         return;
       }
 
+      const token = await executeRecaptcha("signupsubmit");
+
+      console.log(token);
+
       const registerData = (
         await registerMutation({
           variables: {
@@ -57,6 +61,7 @@ export default function SignupForm() {
             email: inputdata.signupemail,
             password: inputdata.signuppassword,
             passwordCheck: inputdata.signuppasswordconfirm,
+            recaptchaToken: token,
           },
         })
       ).data;
@@ -92,12 +97,10 @@ export default function SignupForm() {
         return;
       }
 
-      const token = await executeRecaptcha("signupsubmit");
       inputdata.captchaToken = token;
       await new Promise((r) => setTimeout(r, 1000));
       methods.reset();
       alert(JSON.stringify(inputdata));
-      return token;
     },
     [executeRecaptcha]
   );

@@ -1,14 +1,11 @@
-import pyoji from "/public/page/massive_che1.png";
-import Link from "next/link";
-import { AiOutlineDownload, AiOutlineAlert } from "react-icons/ai";
+import { CorrectionContent } from "./loadcontent";
 
-export default function Correction() {
+export default async function Correction() {
+  console.log("ㅁㄴㅇㄹ");
   return (
     <div className="w-full flex flex-col">
       <CorrectionHeader />
-      {content.map((v, i) => {
-        return <CorrectionContent key={v + i} {...v} />;
-      })}
+      <CorrectionContent />
     </div>
   );
 }
@@ -94,46 +91,6 @@ function CorrectionHeader() {
           </p>
         </div>
         <div className="m-3 w-fit"></div>
-      </div>
-    </div>
-  );
-}
-
-function CorrectionContent({
-  title,
-  date,
-  description,
-  fileLink,
-  reportLink,
-  imgLink,
-}) {
-  return (
-    <div className="py-8 border-b hover:shadow-lg hover:transition-shadow ">
-      <div className="geist-wrapper flex md:flex-row flex-col md:gap-0 gap-5 md:justify-between justify-center items-center">
-        <div className="flex flex-col justify-center gap-3">
-          <div className="md:text-2xl text-lg font-extrabold md:py-4 py-2">
-            <h1>{title}</h1>
-          </div>
-          <div className="md:text-xl text-base">{description}</div>
-          <div className="md:text-xl text-base">최근 변경일 : {date}</div>
-          <div className="flex gap-4 w-full md:justify-start justify-center items-center ">
-            <Link href={fileLink} target="_blank">
-              <div className="w-fit flex flex-row justify-center items-center p-2 hover:underline">
-                <AiOutlineDownload />
-                <h3 className="font-medium text-sm ml-2">파일 다운로드</h3>
-              </div>
-            </Link>
-            <Link href={reportLink} target="_blank">
-              <div className="w-fit flex flex-row text-red-500 justify-center items-center p-2 hover:underline">
-                <AiOutlineAlert />
-                <h3 className="font-medium text-sm ml-2">정오사항 제보하기</h3>
-              </div>
-            </Link>
-          </div>
-        </div>
-        <div className="md:w-60 md:h-80 w-40 h-60 flex">
-          <img src={imgLink} width={225} height={350} alt="mo1" />
-        </div>
       </div>
     </div>
   );

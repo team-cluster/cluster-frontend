@@ -28,6 +28,8 @@ const LOGIN_MUTATION = gql`
 
 export function LoginForm() {
   const [success, setSuccess] = useState(false);
+  const [invalid, setInvalid] = useState(false);
+  const [notVerified, setNotVerified] = useState(false);
   const methods = useForm();
   const router = useRouter();
 
@@ -51,6 +53,8 @@ export function LoginForm() {
         return;
       }
 
+      const token = await executeRecaptcha("signinsubmit");
+
       const loginError = loginInfo.error;
 
       const loginData = (
@@ -58,6 +62,7 @@ export function LoginForm() {
           variables: {
             username: data.email,
             password: data.password,
+            recaptchaToken: token,
           },
         })
       ).data;
@@ -66,33 +71,36 @@ export function LoginForm() {
         loginError ||
         (loginData && loginData.login.__typename === "LoginFailed")
       ) {
-        alert("존재하지 않는 이메일이거나 비밀번호가 틀렸습니다");
+        setInvalid(true);
+        setNotVerified(false);
+        setSuccess(false);
         methods.reset();
         return;
       }
 
       if (loginData && loginData.login.__typename === "InactiveUser") {
-        alert("이메일 인증이 되지 않은 이메일입니다. 이메일을 확인해주세요.");
+        setInvalid(false);
+        setNotVerified(true);
+        setSuccess(false);
         methods.reset();
         return;
       }
 
       if (loginData && loginData.login.__typename === "LoginSuccess") {
+        setInvalid(false);
+        setNotVerified(false);
         setSuccess(true);
-        alert("로그인 성공!");
         methods.reset();
         router.push("/");
         return;
       }
 
-      /*
-      const token = await executeRecaptcha("signinsubmit");
       data.captchaToken = token;
       await new Promise((r) => setTimeout(r, 1000));
       //api 요청 후 검사하기
       setSuccess(true);
       alert(JSON.stringify(data));
-      return token;*/
+      return token;
     },
     [executeRecaptcha, loginInfo]
   );
@@ -166,6 +174,30 @@ export function LoginForm() {
           비밀번호를 까먹었어..
         </Link>
       </div>
+      {invalid && (
+        <small
+          role="alert"
+          className="text-red-500 flex justify-start w-full mb-4 mt-1"
+        >
+          존재하지 않는 이메일이거나 비밀번호가 틀렸습니다
+        </small>
+      )}
+      {notVerified && (
+        <small
+          role="alert"
+          className="text-red-500 flex justify-start w-full mb-4 mt-1"
+        >
+          이메일 인증이 되지 않은 이메일입니다. 이메일을 확인해주세요.
+        </small>
+      )}
+      {success && (
+        <small
+          role="alert"
+          className="text-green-500 flex justify-start w-full mb-4 mt-1"
+        >
+          로그인 성공!
+        </small>
+      )}
 
       <button
         type="submit"
