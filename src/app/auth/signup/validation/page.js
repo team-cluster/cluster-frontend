@@ -27,37 +27,41 @@ export default async function ValidationPage() {
 
 function Validated({ validationNumber, email }) {
   const [resultmsg, setResultmsg] = useState("이메일 확인 중..");
-  const [mutation, validationInfo] = useMutation(VALIDATE_MUTATION);
+  const [mutate, { loading, error, data }] = useMutation(VALIDATE_MUTATION);
   const router = useRouter();
 
   useEffect(() => {
-    console.log(validationInfo);
-    if (validationNumber && email) {
-      if (validationInfo.error || !validationInfo) {
+    if (!validationNumber || !email) {
+      throw new Error("비정상적인 접근입니다.");
+    }
+
+    mutate({
+      variables: {
+        email: email,
+        verificationCode: validationNumber,
+      },
+    }).then((info) => {
+      if (info.data.verifyEmail.__typename === "EmailVerificationSuccess") {
+        setResultmsg("이메일 인증에 성공했습니다. 환영합니다!");
+      } else {
+        setResultmsg("이메일 인증을 실패했습니다.");
+      }
+      setTimeout(() => {
+        router.push("/");
+      }, 5e3);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      if (error) {
         setResultmsg("이메일 인증하는데 오류가 발생했습니다.");
         setTimeout(() => {
           router.push("/");
         }, 7e3);
-      } else {
-        mutation({
-          variables: {
-            email: email,
-            verificationCode: validationNumber,
-          },
-        }).then((Info) => {
-          console.log(Info.data);
-          if (Info.data.verifyEmail.__typename === "EmailVerificationSuccess") {
-            setResultmsg("이메일 인증에 성공했습니다. 환영합니다!");
-          } else {
-            setResultmsg("이메일 인증을 실패했습니다.");
-          }
-          setTimeout(() => {
-            router.push("/");
-          }, 5e3);
-        });
       }
     }
-  }, [resultmsg]);
+  }, [loading, error]);
 
   return (
     <div className="flex flex-col justify-center items-center">
