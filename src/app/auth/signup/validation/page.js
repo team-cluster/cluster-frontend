@@ -27,37 +27,37 @@ export default function ValidationPage() {
 
 function Validated({ validationNumber, email }) {
   const [resultmsg, setResultmsg] = useState("이메일 확인 중..");
-  const [_, { loading, error, data }] = useMutation(VALIDATE_MUTATION, {
-    variables: {
-      email,
-      verificationCode: validationNumber,
-    },
-  });
+  const [mutation, validationInfo] = useMutation(VALIDATE_MUTATION);
   const router = useRouter();
 
   useEffect(() => {
-    if (data) {
-      if (data.verifyEmail.__typename === "EmailVerificationSuccess") {
-        setResultmsg("이메일 인증에 성공했습니다. 환영합니다!");
-      } else {
-        setResultmsg("이메일 인증을 실패했습니다.");
-      }
-      setTimeout(() => {
-        router.push("/");
-      }, 5e3);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (!loading) {
-      if (error) {
+    console.log(validationInfo);
+    if (validationNumber && email) {
+      if (validationInfo.error || !validationInfo) {
         setResultmsg("이메일 인증하는데 오류가 발생했습니다.");
         setTimeout(() => {
           router.push("/");
         }, 7e3);
+      } else {
+        mutation({
+          variables: {
+            email: email,
+            verificationCode: validationNumber,
+          },
+        }).then((Info) => {
+          console.log(Info.data);
+          if (Info.data.verifyEmail.__typename === "EmailVerificationSuccess") {
+            setResultmsg("이메일 인증에 성공했습니다. 환영합니다!");
+          } else {
+            setResultmsg("이메일 인증을 실패했습니다.");
+          }
+          setTimeout(() => {
+            router.push("/");
+          }, 5e3);
+        });
       }
     }
-  }, [loading, error]);
+  }, [resultmsg]);
 
   return (
     <div className="flex flex-col justify-center items-center">
