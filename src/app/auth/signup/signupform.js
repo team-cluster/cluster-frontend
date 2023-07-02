@@ -40,6 +40,7 @@ export default function SignupForm() {
 
   const [rerror, setRerror] = useState(false);
   const [duperror, setDuperror] = useState(false);
+  const [nickduperror, setNickduperror] = useState(false);
   const [success, setSuccess] = useState(false);
   const [captchaerror, setCaptchaerror] = useState(false);
 
@@ -77,6 +78,7 @@ export default function SignupForm() {
       ) {
         setRerror(true);
         setDuperror(false);
+        setNickduperror(false);
         setSuccess(false);
         setCaptchaerror(false);
         methods.reset();
@@ -89,6 +91,20 @@ export default function SignupForm() {
       ) {
         setRerror(false);
         setDuperror(true);
+        setNickduperror(false);
+        setSuccess(false);
+        setCaptchaerror(false);
+        methods.reset();
+        return;
+      }
+
+      if (
+        registerData &&
+        registerData.register.__typename === "RegisterNicknameDuplicatedError"
+      ) {
+        setRerror(false);
+        setDuperror(false);
+        setNickduperror(true);
         setSuccess(false);
         setCaptchaerror(false);
         methods.reset();
@@ -101,6 +117,7 @@ export default function SignupForm() {
       ) {
         setRerror(false);
         setDuperror(false);
+        setNickduperror(false);
         setSuccess(true);
         setCaptchaerror(false);
         methods.reset();
@@ -114,6 +131,7 @@ export default function SignupForm() {
       ) {
         setRerror(false);
         setDuperror(false);
+        setNickduperror(false);
         setSuccess(false);
         setCaptchaerror(true);
       }
@@ -150,41 +168,36 @@ export default function SignupForm() {
         >
           가입할래요
         </button>
-        {rerror && (
-          <small
-            role="alert"
-            className="text-red-500 flex justify-start w-full mb-2 mt-1"
-          >
-            회원가입 하는데 오류가 발생했습니다. 나중에 다시 시도해주세요.
-          </small>
-        )}
-        {duperror && (
-          <small
-            role="alert"
-            className="text-red-500 flex justify-start w-full mb-2 mt-1"
-          >
-            이미 가입된 이메일이거나 이메일 인증이 만료된 계정입니다.
-            <br />
-            이메일 인증 링크를 다시 한번 전송했으니 메일 확인 바랍니다.
-          </small>
-        )}
-        {captchaerror && (
-          <small
-            role="alert"
-            className="text-red-500 flex justify-start w-full mb-2 mt-1"
-          >
-            캡챠 인증에 실패했습니다.
-          </small>
-        )}
-        {success && (
-          <small
-            role="alert"
-            className="text-green-500 flex justify-start w-full mb-2 mt-1"
-          >
-            회원가입 요청에 성공했습니다. 이메일로 인증 링크를 보냈으니 인증
-            바랍니다.
-          </small>
-        )}
+        <div className="w-full flex justify-center items-center">
+          {rerror && (
+            <small role="alert" className="text-red-500 flex mb-2 mt-1">
+              회원가입 하는데 오류가 발생했습니다. 나중에 다시 시도해주세요.
+            </small>
+          )}
+          {duperror && (
+            <small role="alert" className="text-red-500 flex mb-2 mt-1">
+              이미 가입된 이메일이거나 이메일 인증이 만료된 계정입니다.
+              <br />
+              이메일 인증 링크를 다시 한번 전송했으니 메일 확인 바랍니다.
+            </small>
+          )}
+          {nickduperror && (
+            <small role="alert" className="text-red-500 flex mb-2 mt-1">
+              이미 존재하는 닉네임입니다.
+            </small>
+          )}
+          {captchaerror && (
+            <small role="alert" className="text-red-500 flex mb-2 mt-1">
+              너 사람 아니지
+            </small>
+          )}
+          {success && (
+            <small role="alert" className="text-green-500 flex mb-2 mt-1">
+              회원가입 요청에 성공했습니다. 이메일로 인증 링크를 보냈으니 인증
+              바랍니다.
+            </small>
+          )}
+        </div>
       </form>
     </FormProvider>
   );

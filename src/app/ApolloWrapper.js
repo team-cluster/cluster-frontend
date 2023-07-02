@@ -16,7 +16,7 @@ function makeClient() {
   const httpLink = new HttpLink({
     uri: "http://127.0.0.1:8000/graphql/",
     fetchOptions: { cache: "no-store" },
-    credentials: "include",
+    credentials: "same-origin",
   });
 
   return new NextSSRApolloClient({

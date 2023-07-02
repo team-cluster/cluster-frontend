@@ -30,6 +30,7 @@ export function LoginForm() {
   const [success, setSuccess] = useState(false);
   const [invalid, setInvalid] = useState(false);
   const [notVerified, setNotVerified] = useState(false);
+  const [robot, setRobot] = useState(false);
   const methods = useForm();
   const router = useRouter();
 
@@ -68,8 +69,6 @@ export function LoginForm() {
         },
       });
 
-      console.log(loginResponse);
-
       const loginData = loginResponse.data;
 
       if (
@@ -79,6 +78,7 @@ export function LoginForm() {
         setInvalid(true);
         setNotVerified(false);
         setSuccess(false);
+        setRobot(false);
         methods.reset();
         return;
       }
@@ -87,6 +87,7 @@ export function LoginForm() {
         setInvalid(false);
         setNotVerified(true);
         setSuccess(false);
+        setRobot(false);
         methods.reset();
         return;
       }
@@ -95,17 +96,22 @@ export function LoginForm() {
         setInvalid(false);
         setNotVerified(false);
         setSuccess(true);
+        setRobot(false);
         methods.reset();
         router.push("/");
         return;
       }
 
-      data.captchaToken = token;
-      await new Promise((r) => setTimeout(r, 1000));
-      //api 요청 후 검사하기
-      setSuccess(true);
-      alert(JSON.stringify(data));
-      return token;
+      if (loginData && loginData.login.__typename === "LoginRecaptchaFailed") {
+        setInvalid(false);
+        setNotVerified(false);
+        setSuccess(false);
+        setRobot(true);
+        methods.reset();
+        return;
+      }
+
+      alert("알 수 없는 에러가 발생했습니다.");
     },
     [executeRecaptcha, loginInfo]
   );
@@ -188,6 +194,11 @@ export function LoginForm() {
         {notVerified && (
           <small role="alert" className="text-red-500 mb-4 mt-1">
             이메일 인증이 되지 않은 이메일입니다. 이메일을 확인해주세요.
+          </small>
+        )}
+        {robot && (
+          <small role="alert" className="text-red-500 mb-4 mt-1">
+            너 사람 아니지
           </small>
         )}
         {success && (

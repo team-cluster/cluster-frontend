@@ -2,8 +2,9 @@
 "use client";
 
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
-import { useCallback, useState } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { useCallback, useState, useEffect } from "react";
+import { gql, useMutation, useQuery } from "@apollo/client";
+import { CorrectionMiniContent } from "../loadcontent";
 
 const UPLOAD_MUTATION = gql`
   mutation Errata(
@@ -25,6 +26,14 @@ const UPLOAD_MUTATION = gql`
   }
 `;
 
+const UPLOAD_QUERY = gql`
+  query Upload {
+    authorizeErrataCreation {
+      __typename
+    }
+  }
+`;
+
 const SignupStyle = {
   wrapper: "flex flex-col w-full py-3",
   label: "text-xl font-semibold mb-2",
@@ -34,6 +43,7 @@ const SignupStyle = {
 };
 
 export default function CorrectionUpload() {
+  const [permission, setPermission] = useState(false);
   const methods = useForm({ mode: "all" });
 
   const {
@@ -43,6 +53,20 @@ export default function CorrectionUpload() {
   } = methods;
 
   const [mutation, uploadInfo] = useMutation(UPLOAD_MUTATION);
+  const { data } = useQuery(UPLOAD_QUERY);
+
+  useEffect(() => {
+    if (
+      data &&
+      data.authorizeErrataCreation.__typename === "ErrataCreationAuthorized"
+    ) {
+      setPermission(true);
+    } else {
+      setPermission(false);
+    }
+
+    console.log("깨방정");
+  }, [permission]);
 
   const onSubmit = useCallback(async (data, e) => {
     e.preventDefault();
@@ -62,6 +86,11 @@ export default function CorrectionUpload() {
 
     if (uploadData && uploadData.createErrata.__typename === "ErrataCreated") {
       alert("파일을 성공적으로 업로드했습니다.");
+    } else if (
+      uploadData &&
+      uploadData.createErrata.__typename === "ErrataCreationUnauthorized"
+    ) {
+      alert("파일을 업로드할 권한이 없습니다.");
     } else {
       alert("파일 업로드에 실패했습니다.");
     }
@@ -69,6 +98,9 @@ export default function CorrectionUpload() {
 
   return (
     <div className="geist-wrapper">
+      {/*{!permission ? (
+        <h1>업로드 페이지 접속 권한이 없습니다.</h1>
+      ) : */}
       <div className="flex flex-col justify-center items-center w-full my-3">
         <h1 className="font-extrabold text-4xl p-10">정오표 업로드</h1>
         <div className="flex md:flex-row flex-col md:justify-around justify-center w-full">
@@ -234,7 +266,7 @@ function GetCorrectionList() {
         </h2>
       </div>
       <div className="border border-slate-300 rounded-xl p-10">
-        정오표가 비어있습니다. 제목/최근생성일만 표시ㄱㄱ
+        <CorrectionMiniContent />
       </div>
     </div>
   );
