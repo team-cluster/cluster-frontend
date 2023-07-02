@@ -79,7 +79,7 @@ export default function SignupForm() {
 
       if (
         registerData &&
-        registerData.register.__typename === "RegisterEmailDuplicatedeError"
+        registerData.register.__typename === "RegisterEmailDuplicatedError"
       ) {
         alert("이미 등록된 이메일입니다.");
         methods.reset();
@@ -96,6 +96,8 @@ export default function SignupForm() {
         router.push("/");
         return;
       }
+
+      console.log(registerData);
 
       inputdata.captchaToken = token;
       await new Promise((r) => setTimeout(r, 1000));
