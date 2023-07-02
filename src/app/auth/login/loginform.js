@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { FaRegEnvelope } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import Link from "next/link";
@@ -38,7 +38,14 @@ export function LoginForm() {
     handleSubmit,
     formState: { isSubmitting, isDirty, errors },
   } = methods;
-  const [mutation, loginInfo] = useMutation(LOGIN_MUTATION);
+
+  const [mutation, loginInfo] = useMutation(LOGIN_MUTATION, {
+    context: {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  });
 
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -55,17 +62,21 @@ export function LoginForm() {
 
       const token = await executeRecaptcha("signinsubmit");
 
+      console.log(token);
+
       const loginError = loginInfo.error;
 
-      const loginData = (
-        await mutation({
-          variables: {
-            username: data.email,
-            password: data.password,
-            recaptchaToken: token,
-          },
-        })
-      ).data;
+      const loginResponse = await mutation({
+        variables: {
+          username: data.email,
+          password: data.password,
+          recaptchaToken: token,
+        },
+      });
+
+      console.log(loginResponse);
+
+      const loginData = loginResponse.data;
 
       if (
         loginError ||
@@ -174,30 +185,23 @@ export function LoginForm() {
           비밀번호를 까먹었어..
         </Link>
       </div>
-      {invalid && (
-        <small
-          role="alert"
-          className="text-red-500 flex justify-start w-full mb-4 mt-1"
-        >
-          존재하지 않는 이메일이거나 비밀번호가 틀렸습니다
-        </small>
-      )}
-      {notVerified && (
-        <small
-          role="alert"
-          className="text-red-500 flex justify-start w-full mb-4 mt-1"
-        >
-          이메일 인증이 되지 않은 이메일입니다. 이메일을 확인해주세요.
-        </small>
-      )}
-      {success && (
-        <small
-          role="alert"
-          className="text-green-500 flex justify-start w-full mb-4 mt-1"
-        >
-          로그인 성공!
-        </small>
-      )}
+      <div className="flex flex-col justify-center items-center w-full">
+        {invalid && (
+          <small role="alert" className="text-red-500 mb-4 mt-1">
+            존재하지 않는 이메일이거나 비밀번호가 틀렸습니다
+          </small>
+        )}
+        {notVerified && (
+          <small role="alert" className="text-red-500 mb-4 mt-1">
+            이메일 인증이 되지 않은 이메일입니다. 이메일을 확인해주세요.
+          </small>
+        )}
+        {success && (
+          <small role="alert" className="text-green-500 mb-4 mt-1">
+            로그인 성공!
+          </small>
+        )}
+      </div>
 
       <button
         type="submit"

@@ -37,7 +37,12 @@ export default function SignupForm() {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const router = useRouter();
   const methods = useForm({ mode: "all" });
+
+  const [rerror, setRerror] = useState(false);
+  const [duperror, setDuperror] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [captchaerror, setCaptchaerror] = useState(false);
+
   const [registerMutation, registerInfo] = useMutation(REGISTER_MUTATION);
 
   const onSubmit = useCallback(
@@ -51,8 +56,6 @@ export default function SignupForm() {
       }
 
       const token = await executeRecaptcha("signupsubmit");
-
-      console.log(token);
 
       const registerData = (
         await registerMutation({
@@ -72,7 +75,10 @@ export default function SignupForm() {
         registerError ||
         (registerData && registerData.register.__typename === "RegisterError")
       ) {
-        alert("회원가입 하는데 오류가 발생했습니다.");
+        setRerror(true);
+        setDuperror(false);
+        setSuccess(false);
+        setCaptchaerror(false);
         methods.reset();
         return;
       }
@@ -81,7 +87,10 @@ export default function SignupForm() {
         registerData &&
         registerData.register.__typename === "RegisterEmailDuplicatedError"
       ) {
-        alert("이미 등록된 이메일입니다.");
+        setRerror(false);
+        setDuperror(true);
+        setSuccess(false);
+        setCaptchaerror(false);
         methods.reset();
         return;
       }
@@ -90,11 +99,23 @@ export default function SignupForm() {
         registerData &&
         registerData.register.__typename === "RegisterSuccess"
       ) {
+        setRerror(false);
+        setDuperror(false);
         setSuccess(true);
-        alert("해당 이메일로 인증 링크를 보냈습니다. 확인해주세요.");
+        setCaptchaerror(false);
         methods.reset();
-        router.push("/");
+        setTimeout(() => router.push("/"), 10e3);
         return;
+      }
+
+      if (
+        registerData &&
+        registerData.register.__typename === "RegisterRecaptchaFailed"
+      ) {
+        setRerror(false);
+        setDuperror(false);
+        setSuccess(false);
+        setCaptchaerror(true);
       }
 
       console.log(registerData);
@@ -129,7 +150,41 @@ export default function SignupForm() {
         >
           가입할래요
         </button>
-        {}
+        {rerror && (
+          <small
+            role="alert"
+            className="text-red-500 flex justify-start w-full mb-2 mt-1"
+          >
+            회원가입 하는데 오류가 발생했습니다. 나중에 다시 시도해주세요.
+          </small>
+        )}
+        {duperror && (
+          <small
+            role="alert"
+            className="text-red-500 flex justify-start w-full mb-2 mt-1"
+          >
+            이미 가입된 이메일이거나 이메일 인증이 만료된 계정입니다.
+            <br />
+            이메일 인증 링크를 다시 한번 전송했으니 메일 확인 바랍니다.
+          </small>
+        )}
+        {captchaerror && (
+          <small
+            role="alert"
+            className="text-red-500 flex justify-start w-full mb-2 mt-1"
+          >
+            캡챠 인증에 실패했습니다.
+          </small>
+        )}
+        {success && (
+          <small
+            role="alert"
+            className="text-green-500 flex justify-start w-full mb-2 mt-1"
+          >
+            회원가입 요청에 성공했습니다. 이메일로 인증 링크를 보냈으니 인증
+            바랍니다.
+          </small>
+        )}
       </form>
     </FormProvider>
   );
