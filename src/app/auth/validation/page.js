@@ -61,7 +61,7 @@ function Validated({ validationNumber, email }) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h1 className="font-bold text-3xl">[Clusterkice.kr]</h1>
+      <h1 className="font-bold text-3xl">clusterkice.kr</h1>
       <h1 className="font-bold text-3xl">{resultmsg}</h1>
       <h1 className="font-bold text-2xl">잠시 뒤 홈으로 돌아갑니다..</h1>
     </div>
