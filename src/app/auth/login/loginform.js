@@ -39,13 +39,7 @@ export function LoginForm() {
     formState: { isSubmitting, isDirty, errors },
   } = methods;
 
-  const [mutation, loginInfo] = useMutation(LOGIN_MUTATION, {
-    context: {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-  });
+  const [mutation, loginInfo] = useMutation(LOGIN_MUTATION);
 
   const { executeRecaptcha } = useGoogleReCaptcha();
 

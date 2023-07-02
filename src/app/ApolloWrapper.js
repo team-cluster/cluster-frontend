@@ -8,6 +8,7 @@ import {
   NextSSRApolloClient,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
+import { setContext } from "@apollo/client/link/context";
 
 // have a function to create a client for you
 

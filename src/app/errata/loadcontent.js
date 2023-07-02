@@ -28,6 +28,10 @@ function CorrectionContent() {
         <h1 className="w-full flex flex-col justify-center items-center font-extrabold text-3xl">
           로딩중..
         </h1>
+      ) : !data ? (
+        <h1 className="w-full flex flex-col justify-center items-center font-extrabold text-3xl">
+          서버로부터 데이터를 가져오지 못했습니다.
+        </h1>
       ) : (
         data.errataList.map(
           ({ description, file, image, link, title, updatedAt }, i) => {
