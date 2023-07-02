@@ -2,7 +2,7 @@
 
 import { gql, useMutation } from "@apollo/client";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const VALIDATE_MUTATION = gql`
@@ -26,6 +26,7 @@ export default function ValidationPage() {
 }
 
 function Validated({ validationNumber, email }) {
+  const [resultmsg, setResultmsg] = useState("이메일 확인 중..");
   const [_, { loading, error, data }] = useMutation(VALIDATE_MUTATION, {
     variables: {
       email,
@@ -34,28 +35,34 @@ function Validated({ validationNumber, email }) {
   });
   const router = useRouter();
 
-  const getMessage = () => {
-    if (loading) {
-      return "이메일 확인 중..";
-    }
-    if (data && data.verifyEmail.__typename === "EmailVerificationSuccess") {
-      return "이메일 인증에 성공했습니다. 환영합니다!";
-    }
-    return "이메일 인증하는데 오류가 발생했습니다.";
-  };
-
   useEffect(() => {
-    if (data || (!loading && error)) {
+    if (data) {
+      if (data.verifyEmail.__typename === "EmailVerificationSuccess") {
+        setResultmsg("이메일 인증에 성공했습니다. 환영합니다!");
+      } else {
+        setResultmsg("이메일 인증을 실패했습니다.");
+      }
       setTimeout(() => {
         router.push("/");
       }, 5e3);
     }
-  }, [data, loading, error]);
+  }, [data]);
+
+  useEffect(() => {
+    if (!loading) {
+      if (error) {
+        setResultmsg("이메일 인증하는데 오류가 발생했습니다.");
+        setTimeout(() => {
+          router.push("/");
+        }, 7e3);
+      }
+    }
+  }, [loading, error]);
 
   return (
     <div className="flex flex-col justify-center items-center">
       <h1 className="font-bold text-3xl">[Clusterkice.kr]</h1>
-      <h1 className="font-bold text-3xl">{getMessage()}</h1>
+      <h1 className="font-bold text-3xl">{resultmsg}</h1>
       <h1 className="font-bold text-2xl">잠시 뒤 홈으로 돌아갑니다..</h1>
     </div>
   );
