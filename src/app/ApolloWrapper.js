@@ -14,8 +14,7 @@ import { setContext } from "@apollo/client/link/context";
 
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: "http://127.0.0.1:8000/graphql/",
-    fetchOptions: { cache: "no-store" },
+    uri: process.env.GRAPHGQL_ENDPOINT,
     credentials: "same-origin",
   });
 
