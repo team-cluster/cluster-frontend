@@ -57,8 +57,6 @@ export function LoginForm() {
 
       const token = await executeRecaptcha("signinsubmit");
 
-      console.log(token);
-
       const loginError = loginInfo.error;
 
       const loginResponse = await mutation({

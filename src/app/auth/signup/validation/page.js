@@ -45,8 +45,7 @@ function Validated({ validationNumber, email }) {
             verificationCode: validationNumber,
           },
         }).then((Info) => {
-          console.log(Info.data);
-          if (Info.data.verifyEmail.__typename === "EmailVerificationSuccess") {
+          if (Info.verifyEmail.__typename === "EmailVerificationSuccess") {
             setResultmsg("이메일 인증에 성공했습니다. 환영합니다!");
           } else {
             setResultmsg("이메일 인증을 실패했습니다.");

@@ -64,8 +64,6 @@ export default function CorrectionUpload() {
     } else {
       setPermission(false);
     }
-
-    console.log("깨방정");
   }, [permission]);
 
   const onSubmit = useCallback(async (data, e) => {
@@ -98,30 +96,31 @@ export default function CorrectionUpload() {
 
   return (
     <div className="geist-wrapper">
-      {/*{!permission ? (
+      {!permission ? (
         <h1>업로드 페이지 접속 권한이 없습니다.</h1>
-      ) : */}
-      <div className="flex flex-col justify-center items-center w-full my-3">
-        <h1 className="font-extrabold text-4xl p-10">정오표 업로드</h1>
-        <div className="flex md:flex-row flex-col md:justify-around justify-center w-full">
-          <FormProvider {...methods}>
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col items-center"
-            >
-              <UploadForm />
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="border-2 border-black rounded-xl px-12 py-2 inline-block font-semibold hover:bg-black hover:text-white disabled:border-gray-200 disabled:text-white disabled:bg-gray-200"
+      ) : (
+        <div className="flex flex-col justify-center items-center w-full my-3">
+          <h1 className="font-extrabold text-4xl p-10">정오표 업로드</h1>
+          <div className="flex md:flex-row flex-col md:justify-around justify-center w-full">
+            <FormProvider {...methods}>
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col items-center"
               >
-                업로드
-              </button>
-            </form>
-          </FormProvider>
-          <GetCorrectionList />
+                <UploadForm />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="border-2 border-black rounded-xl px-12 py-2 inline-block font-semibold hover:bg-black hover:text-white disabled:border-gray-200 disabled:text-white disabled:bg-gray-200"
+                >
+                  업로드
+                </button>
+              </form>
+            </FormProvider>
+            <GetCorrectionList />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
