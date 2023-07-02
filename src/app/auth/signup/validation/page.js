@@ -13,7 +13,7 @@ const VALIDATE_MUTATION = gql`
   }
 `;
 
-export default async function ValidationPage() {
+export default function ValidationPage() {
   const searchParams = useSearchParams();
   const validationNumber = searchParams.get("verificationCode");
   const email = searchParams.get("email");
