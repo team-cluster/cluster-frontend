@@ -27,21 +27,17 @@ export default async function ValidationPage() {
 
 function Validated({ validationNumber, email }) {
   const [resultmsg, setResultmsg] = useState("이메일 확인 중..");
-  const [mutate, { loading, error, data }] = useMutation(VALIDATE_MUTATION);
+  const [_, { loading, error, data }] = useMutation(VALIDATE_MUTATION, {
+    variables: {
+      email,
+      verificationCode: validationNumber,
+    },
+  });
   const router = useRouter();
 
   useEffect(() => {
-    if (!validationNumber || !email) {
-      throw new Error("비정상적인 접근입니다.");
-    }
-
-    mutate({
-      variables: {
-        email: email,
-        verificationCode: validationNumber,
-      },
-    }).then((info) => {
-      if (info.data.verifyEmail.__typename === "EmailVerificationSuccess") {
+    if (data) {
+      if (data.verifyEmail.__typename === "EmailVerificationSuccess") {
         setResultmsg("이메일 인증에 성공했습니다. 환영합니다!");
       } else {
         setResultmsg("이메일 인증을 실패했습니다.");
@@ -49,8 +45,8 @@ function Validated({ validationNumber, email }) {
       setTimeout(() => {
         router.push("/");
       }, 5e3);
-    });
-  }, []);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (!loading) {
