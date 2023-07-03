@@ -300,14 +300,11 @@ function CorrectionMiniContent() {
   const { loading, error, data } = useQuery(QUERY_LIST);
   const [mutation, set] = useMutation(DELETE_ERRATA);
 
-  const onClick = useCallback(
-    async (id) => {
-      console.log(id);
-      const result = (await mutation({ variables: { id: id } })).data;
-      console.log(result);
-    },
-    [mutation]
-  );
+  const onClick = useCallback(async (id) => {
+    console.log(id);
+    const result = (await mutation({ variables: { id: id } })).data;
+    console.log(result);
+  }, []);
 
   return (
     <div>
