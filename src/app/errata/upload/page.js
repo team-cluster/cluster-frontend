@@ -300,11 +300,11 @@ function CorrectionMiniContent() {
   const { loading, error, data } = useQuery(QUERY_LIST);
   const [mutation, set] = useMutation(DELETE_ERRATA);
 
-  const onClick = useCallback(async (id) => {
+  const onClick = async (id) => {
     console.log(id);
     const result = (await mutation({ variables: { id: id } })).data;
     console.log(result);
-  }, []);
+  };
 
   return (
     <div>
@@ -329,7 +329,7 @@ function CorrectionMiniContent() {
               className="py-8 border-b hover:shadow-lg hover:transition-shadow "
               key={i}
             >
-              <div className="geist-wrapper flex md:flex-row flex-col md:gap-0 gap-5 md:justify-between justify-center items-center">
+              <div className="flex md:flex-row flex-col md:gap-0 gap-5 md:justify-between justify-center items-center">
                 <div className="flex flex-col justify-center gap-3">
                   <div className="md:text-2xl text-lg font-extrabold md:py-4 py-2">
                     <h1>{title}</h1>
@@ -339,7 +339,7 @@ function CorrectionMiniContent() {
                   </div>
                   <button
                     onClick={onClick(id)}
-                    className="p-3 text-lg text-red font-bold"
+                    className="p-3 w-fit text-lg text-red font-bold"
                   >
                     삭제하기
                   </button>
