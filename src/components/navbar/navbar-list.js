@@ -6,7 +6,7 @@ import logo from "/public/logo/cluster-logo.png";
 import logoLabel from "/public/logo/cluster-label.png";
 import "./style.css";
 import { usePathname, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { gql, useQuery } from "@apollo/client";
 const QUERY_USER = gql`
   query UserQuery {
