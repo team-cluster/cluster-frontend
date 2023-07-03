@@ -294,7 +294,7 @@ function GetCorrectionList() {
   );
 }
 
-const onClick = (id) => {
+const onClick = (id, mutation) => {
   console.log(id);
   mutation({ variables: { id: id } }).then((info) => {
     console.log(info.data);
