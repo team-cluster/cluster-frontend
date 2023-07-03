@@ -16,7 +16,7 @@ function ReleaseHeader() {
         <div className="flex-col">
           <h1 className="text-5xl font-extrabold mb-5">배포 컨텐츠</h1>
           <p className="text-xl font-normal text-gray-500 break-keep">
-            Cluster 팀의 고품질 모의고사를 무료로 맛보다.
+            Cluster 팀의 고품질 컨텐츠를 무료로 맛보다.
           </p>
         </div>
         <div className="m-3 w-fit"></div>

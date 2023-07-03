@@ -155,7 +155,7 @@ function UploadForm() {
   return (
     <div className="flex flex-col w-fit">
       <div className={SignupStyle.wrapper}>
-        <label className={SignupStyle.label}>책 제목</label>
+        <label className={SignupStyle.label}>컨텐츠 제목</label>
         <p className={SignupStyle.description}>
           업로드에 쓰일 배포 컨텐츠 제목을 입력해주세요
         </p>
@@ -179,7 +179,7 @@ function UploadForm() {
       </div>
 
       <div className={SignupStyle.wrapper}>
-        <label className={SignupStyle.label}>정오표 설명</label>
+        <label className={SignupStyle.label}>컨텐츠 설명</label>
         <p className={SignupStyle.description}>
           배포 컨텐츠에 대한 설명을 간단하게 적어주세요
         </p>
@@ -203,7 +203,7 @@ function UploadForm() {
       </div>
 
       <div className={SignupStyle.wrapper}>
-        <label className={SignupStyle.label}>정오표 파일</label>
+        <label className={SignupStyle.label}>컨텐츠 파일</label>
         <p className={SignupStyle.description}>
           배포 컨텐츠 파일 링크를 붙여넣어주세요
         </p>
@@ -266,7 +266,7 @@ function UploadForm() {
         <input
           type="text"
           id="bookcoverimg"
-          placeholder="https://forms.google.com/..."
+          placeholder="이미지 링크..."
           className={SignupStyle.input}
           {...register("bookcoverimg", {
             required: "이미지 파일 링크를 입력해주세요.",

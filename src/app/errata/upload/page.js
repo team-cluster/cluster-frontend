@@ -261,7 +261,7 @@ function UploadForm() {
         <input
           type="text"
           id="bookcoverimg"
-          placeholder="https://forms.google.com/..."
+          placeholder="이미지 파일 링크..."
           className={SignupStyle.input}
           {...register("bookcoverimg", {
             required: "이미지 파일 링크를 입력해주세요.",

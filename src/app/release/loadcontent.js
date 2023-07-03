@@ -4,8 +4,6 @@ import Link from "next/link";
 import { AiOutlineDownload, AiOutlineAlert } from "react-icons/ai";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { useCallback } from "react";
-
 const QUERY_LIST = gql`
   query MyQuery {
     examinationList {
@@ -67,7 +65,7 @@ function ReleaseContent() {
                       </Link>
                       <Link href={link} target="_blank">
                         <div className="w-fit flex flex-row text-blue-500 justify-center items-center p-2 hover:underline">
-                          <h3 className="font-medium text-sm ml-2">
+                          <h3 className="font-medium text-sm mr-2">
                             자세히 알아보기
                           </h3>
                           <FaExternalLinkAlt />
