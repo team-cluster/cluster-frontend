@@ -64,7 +64,8 @@ export default function CorrectionUpload() {
     } else {
       setPermission(false);
     }
-  }, [permission]);
+  }, []);
+
   console.log(data);
 
   const onSubmit = useCallback(async (inputdata, e) => {
