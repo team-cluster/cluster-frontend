@@ -12,7 +12,8 @@ export default function Recruit() {
         <InnerContent2 />
         <div className="border w-full"></div>
         <InnerContent3 />
-        <RecruitButton />
+        <div className="border w-full"></div>
+        <InnerContent4 />
       </div>
     </div>
   );
@@ -148,41 +149,52 @@ function InnerContent3() {
           </h1>
         </div>
         <div className="md:text-2xl text-lg flex flex-col justify-center gap-2 font-normal">
-          <h3 className="break-keep">총 3과목으로 다음과 같습니다. </h3>
-        </div>
-        <div className="border-y-4 border-black py-10 my-10">
-          <ol className="md:text-2xl text-lg flex flex-wrap items-center justify-center md:gap-24 gap-4 font-semibold break-keep">
-            <li className="w-fit md:px-10 p-3 border-2 border-blue-500 text-blue-500 rounded-xl hover:text-white hover:bg-blue-500">
-              물리학 I
-            </li>
-            <li className="w-fit md:px-10 p-3 border-2 border-rose-600 text-rose-600 rounded-xl hover:text-white hover:bg-rose-600">
-              화학 I
-            </li>
-            <li className="w-fit md:px-10 p-3 border-2 border-green-600 text-green-600 rounded-xl hover:text-white hover:bg-green-600">
-              생명과학 I
-            </li>
-          </ol>
-        </div>
-        <div className="mt-4 md:text-4xl text-2xl font-semibold flex flex-col justify-center items-center gap-8 text-center break-keep">
-          <h1>
-            클러스터 팀에 합류하고자 하는 분은 아래 버튼을 눌러 구글 폼을
-            작성해주세요.
-          </h1>
+          <h3 className="break-keep">
+            총 3과목으로 <span className="text-blue-500">물리학 I</span> /{" "}
+            <span className="text-rose-600">화학 I</span> /{" "}
+            <span className="text-green-600">생명과학 I</span> 분야에서
+            모집합니다.{" "}
+          </h3>
         </div>
       </div>
     </div>
   );
 }
 
-function RecruitButton() {
-  const formlink = "https://forms.gle/sHsXsgTA8c6Gohvs9";
+const formlinkphy1 = "https://forms.gle/jqhz65hGzT3HkwKV7";
+const formlinkche1 = "https://forms.gle/LkRis7rN7Y6mp3d69";
+const formlinkbio1 = "https://forms.gle/SeEFHPUQH5rxLSvn8";
+
+function InnerContent4() {
   return (
-    <div className="mb-20">
-      <Link href={formlink} target="_blank">
-        <div className="p-6 rounded-xl border-4 border-indigo-500 text-indigo-500 font-semibold md:text-2xl text-xl hover:bg-indigo-500 hover:text-white">
-          <h1>출제진 지원하러 가기</h1>
+    <div className="geist-wrapper">
+      <div className="md:py-10 my-10 flex flex-col justify-center gap-4">
+        <div className="mt-4 md:text-4xl text-2xl font-semibold flex flex-col justify-center items-center gap-8 text-center break-keep">
+          <h1>
+            클러스터 팀에 합류하고자 하는 분은 아래 버튼을 눌러 구글 폼을
+            작성해주세요.
+          </h1>
         </div>
-      </Link>
+        <div className="border-y-4 border-black py-10 my-10">
+          <ol className="md:text-2xl text-lg flex flex-wrap items-center justify-center md:gap-24 gap-4 font-semibold break-keep">
+            <Link href={formlinkphy1} target="_blank">
+              <li className="w-fit md:px-10 p-3 border-2 border-blue-500 text-blue-500 rounded-xl hover:text-white hover:bg-blue-500">
+                물리학 I
+              </li>
+            </Link>
+            <Link href={formlinkche1} target="_blank">
+              <li className="w-fit md:px-10 p-3 border-2 border-rose-600 text-rose-600 rounded-xl hover:text-white hover:bg-rose-600">
+                화학 I
+              </li>
+            </Link>
+            <Link href={formlinkbio1} target="_blank">
+              <li className="w-fit md:px-10 p-3 border-2 border-green-600 text-green-600 rounded-xl hover:text-white hover:bg-green-600">
+                생명과학 I
+              </li>
+            </Link>
+          </ol>
+        </div>
+      </div>
     </div>
   );
 }

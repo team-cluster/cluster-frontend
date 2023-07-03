@@ -25,7 +25,7 @@ export default function ReleaseDelete() {
       mutation({ variables: { id: id } }).then((info) => {
         if (
           info.data &&
-          info.data.removeExamination.__typename === "ErrataRemoved"
+          info.data.removeExamination.__typename === "ExaminationRemoved"
         ) {
           setResult("삭제되었습니다.");
         }

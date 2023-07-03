@@ -5,6 +5,7 @@ import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { useCallback, useState, useEffect } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import Link from "next/link";
+import { useRouter } from "next/naviation";
 
 const UPLOAD_MUTATION = gql`
   mutation Examination(
@@ -60,6 +61,7 @@ const SignupStyle = {
 export default function ReleaseUpload() {
   const [permission, setPermission] = useState(false);
   const methods = useForm({ mode: "all" });
+  const router = useRouter();
 
   const {
     register,
@@ -104,6 +106,8 @@ export default function ReleaseUpload() {
       uploadData.createExamination.__typename === "ExaminationCreated"
     ) {
       alert("파일을 성공적으로 업로드했습니다.");
+      methods.reset();
+      router.refresh();
     } else if (
       uploadData &&
       uploadData.createExamination.__typename ===
