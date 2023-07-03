@@ -51,7 +51,6 @@ export function LoginForm() {
       if (!executeRecaptcha) {
         alert("캡챠가 활성화되지 않았습니다.");
         methods.reset();
-        console.log("Execute recaptcha not yet available");
         return;
       }
 

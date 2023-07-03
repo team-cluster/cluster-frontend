@@ -52,7 +52,6 @@ export default function SignupForm() {
       if (!executeRecaptcha) {
         alert("캡챠가 인증되지 않았습니다.");
         methods.reset();
-        console.log("Execute recaptcha not yet available");
         return;
       }
 
@@ -136,12 +135,9 @@ export default function SignupForm() {
         setCaptchaerror(true);
       }
 
-      console.log(registerData);
+      alert("알 수 없는 오류가 발생했습니다.");
 
-      inputdata.captchaToken = token;
-      await new Promise((r) => setTimeout(r, 1000));
       methods.reset();
-      alert(JSON.stringify(inputdata));
     },
     [executeRecaptcha]
   );

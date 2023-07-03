@@ -31,7 +31,6 @@ function Validated({ validationNumber, email }) {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(validationInfo);
     if (validationNumber && email) {
       if (validationInfo.error || !validationInfo) {
         setResultmsg("이메일 인증하는데 오류가 발생했습니다.");
@@ -45,7 +44,10 @@ function Validated({ validationNumber, email }) {
             verificationCode: validationNumber,
           },
         }).then((Info) => {
-          if (Info.verifyEmail.__typename === "EmailVerificationSuccess") {
+          if (
+            Info.data &&
+            Info.data.verifyEmail.__typename === "EmailVerificationSuccess"
+          ) {
             setResultmsg("이메일 인증에 성공했습니다. 환영합니다!");
           } else {
             setResultmsg("이메일 인증을 실패했습니다.");

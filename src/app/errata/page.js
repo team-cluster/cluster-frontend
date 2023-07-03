@@ -1,7 +1,6 @@
 import { CorrectionContent } from "./loadcontent";
 
 export default async function Correction() {
-  console.log("ㅁㄴㅇㄹ");
   return (
     <div className="w-full flex flex-col">
       <CorrectionHeader />
