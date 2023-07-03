@@ -65,19 +65,19 @@ export default function CorrectionUpload() {
       setPermission(false);
     }
   }, [permission]);
+  console.log(data);
 
-  const onSubmit = useCallback(async (data, e) => {
+  const onSubmit = useCallback(async (inputdata, e) => {
     e.preventDefault();
-    console.log(data);
 
     const uploadData = (
       await mutation({
         variables: {
-          title: data.bookTitle,
-          description: data.bookDescription,
-          file: data.bookFile,
-          link: data.bookReportLink,
-          image: data.bookcoverimg,
+          title: inputdata.bookTitle,
+          description: inputdata.bookDescription,
+          file: inputdata.bookFile,
+          link: inputdata.bookReportLink,
+          image: inputdata.bookcoverimg,
         },
       })
     ).data;
