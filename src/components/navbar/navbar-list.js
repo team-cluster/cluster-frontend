@@ -71,11 +71,7 @@ export default function NavbarList() {
 
       <div className="navbar-mobile-buttons">
         <div className="navbar-userinfo">
-          {loggedin ? (
-            <Link href="/auth/login">로그인</Link>
-          ) : (
-            <button onClick={onClick}>로그아웃</button>
-          )}
+          <Link href="/auth/login">{loggedin ? "로그인" : "로그아웃"}</Link>
         </div>
         <div className="navham">
           <button

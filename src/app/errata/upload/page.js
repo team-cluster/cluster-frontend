@@ -82,6 +82,8 @@ export default function CorrectionUpload() {
       })
     ).data;
 
+    console.log(uploadData);
+
     if (uploadData && uploadData.createErrata.__typename === "ErrataCreated") {
       alert("파일을 성공적으로 업로드했습니다.");
     } else if (

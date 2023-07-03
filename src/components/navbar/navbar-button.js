@@ -38,15 +38,9 @@ export default function NavbarButton() {
 
   return (
     <div className="navbar-button-wrapper">
-      {!loggedin ? (
-        <Link href="/auth/login" className="navbar-button">
-          로그인
-        </Link>
-      ) : (
-        <button onClick={onClick} className="navbar-button">
-          로그아웃
-        </button>
-      )}
+      <Link href="/auth/login" className="navbar-button">
+        {!loggedin ? "로그인" : "로그인됨"}
+      </Link>
     </div>
   );
 }
