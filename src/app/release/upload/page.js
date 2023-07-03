@@ -57,7 +57,7 @@ const SignupStyle = {
     "mb-2 mt-1 block w-full px-3 py-2 bg-grey-100 border border-slate-300 rounded-md text-sm shadsow-sm placeholder-slate-400 focus:output-none, focus:border-sky-500 focus:ring-1 focus:ring-sky-500",
 };
 
-export default function CorrectionUpload() {
+export default function ReleaseUpload() {
   const [permission, setPermission] = useState(false);
   const methods = useForm({ mode: "all" });
 
@@ -73,7 +73,8 @@ export default function CorrectionUpload() {
   useEffect(() => {
     if (
       data &&
-      data.authorizeErrataCreation.__typename === "ErrataCreationAuthorized"
+      data.authorizeExaminationCreation.__typename ===
+        "ExaminationCreationAuthorized"
     ) {
       setPermission(true);
     } else {
@@ -98,11 +99,15 @@ export default function CorrectionUpload() {
       })
     ).data;
 
-    if (uploadData && uploadData.createErrata.__typename === "ErrataCreated") {
+    if (
+      uploadData &&
+      uploadData.createExamination.__typename === "ExaminationCreated"
+    ) {
       alert("파일을 성공적으로 업로드했습니다.");
     } else if (
       uploadData &&
-      uploadData.createErrata.__typename === "ErrataCreationUnauthorized"
+      uploadData.createExamination.__typename ===
+        "ExaminationCreationUnauthorized"
     ) {
       alert("파일을 업로드할 권한이 없습니다.");
     } else {
@@ -300,12 +305,12 @@ function CorrectionMiniContent() {
         <h1 className="w-full flex flex-col justify-center items-center font-extrabold text-2xl my-4">
           서버로부터 데이터를 가져오지 못했습니다.
         </h1>
-      ) : data.errataList.length === 0 ? (
+      ) : data.examinationList.length === 0 ? (
         <h1 className="w-full flex flex-col justify-center items-center font-extrabold text-2xl my-4">
           컨텐츠가 없습니다.
         </h1>
       ) : (
-        data.errataList.map(({ title, updatedAt, id }, i) => {
+        data.examinationList.map(({ title, updatedAt, id }, i) => {
           const parsedTime = updatedAt.split("T");
 
           return (

@@ -34,12 +34,12 @@ function ReleaseContent() {
         <h1 className="w-full flex flex-col justify-center items-center font-extrabold text-3xl my-4">
           서버로부터 데이터를 가져오지 못했습니다.
         </h1>
-      ) : data.errataList.length === 0 ? (
+      ) : data.examinationList.length === 0 ? (
         <h1 className="w-full flex flex-col justify-center items-center font-extrabold text-3xl my-4">
           배포 컨텐츠가 없습니다.
         </h1>
       ) : (
-        data.errataList.map(
+        data.examinationList.map(
           ({ description, file, image, link, title, updatedAt }, i) => {
             const parsedTime = updatedAt.split("T");
             return (
