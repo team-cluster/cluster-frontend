@@ -5,7 +5,7 @@ import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { useCallback, useState, useEffect } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import Link from "next/link";
-import { useRouter } from "next/naviation";
+import { useRouter } from "next/navigation";
 
 const UPLOAD_MUTATION = gql`
   mutation Errata(
