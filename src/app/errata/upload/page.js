@@ -294,16 +294,16 @@ function GetCorrectionList() {
   );
 }
 
-const onClick = (id, mutation) => {
-  console.log(id);
-  mutation({ variables: { id: id } }).then((info) => {
-    console.log(info.data);
-  });
-};
-
 function CorrectionMiniContent() {
   const { loading, error, data } = useQuery(QUERY_LIST);
   const [mutation, set] = useMutation(DELETE_ERRATA);
+
+  const onClick = useCallback((id, mutation) => {
+    console.log(id);
+    mutation({ variables: { id: id } }).then((info) => {
+      console.log(info.data);
+    });
+  });
 
   return (
     <div>
@@ -325,7 +325,7 @@ function CorrectionMiniContent() {
 
           return (
             <div
-              className="py-8 border-b hover:shadow-lg hover:transition-shadow "
+              className="py-4 border-b hover:shadow-lg hover:transition-shadow "
               key={i}
             >
               <div className="flex md:flex-row flex-col md:gap-0 gap-5 md:justify-between justify-center items-center">
@@ -338,7 +338,7 @@ function CorrectionMiniContent() {
                   </div>
                   <button
                     onClick={onClick(id, mutation)}
-                    className="p-3 w-fit text-lg text-red font-bold hover:bg-white hover:text-white"
+                    className="p-3 w-fit text-lg text-red font-bold hover:bg-red hover:text-white"
                   >
                     삭제하기
                   </button>
