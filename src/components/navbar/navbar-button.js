@@ -24,6 +24,7 @@ export default function NavbarButton() {
   }, []);
 
   useEffect(() => {
+    console.log(data);
     if (data) {
       if (data.user.__typename === "Anonymous") {
         setLoggedin(false);
@@ -31,7 +32,7 @@ export default function NavbarButton() {
         setLoggedin(true);
       }
     }
-  }, [data, loggedin]);
+  }, [data]);
 
   return (
     <div className="navbar-button-wrapper">
