@@ -5,7 +5,7 @@ import Image from "next/image";
 import logo from "/public/logo/cluster-logo.png";
 import logoLabel from "/public/logo/cluster-label.png";
 import "./style.css";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 const navRoutes = [
@@ -22,7 +22,25 @@ export default function NavbarList() {
     "h-1 w-6 my-px rounded-full bg-black transition ease transform duration-300";
   const pathname = usePathname();
 
-  const isLogined = true;
+  const [loggedin, setLoggedin] = useState(false);
+  const { client, loading, error, data } = useQuery(QUERY_USER);
+  const router = useRouter();
+
+  const onClick = useCallback(async () => {
+    await client.clearStore();
+    setLoggedin(false);
+    router.refresh();
+  }, [data]);
+
+  useEffect(() => {
+    if (data) {
+      if (data.user.__typename === "Anonymous") {
+        setLoggedin(false);
+      } else {
+        setLoggedin(true);
+      }
+    }
+  }, [data]);
 
   return (
     <div className="navbar-list">
@@ -45,10 +63,10 @@ export default function NavbarList() {
 
       <div className="navbar-mobile-buttons">
         <div className="navbar-userinfo">
-          {isLogined ? (
+          {loggedin ? (
             <Link href="/auth/login">로그인</Link>
           ) : (
-            <Link href="/auth/login">다른 계정으로 로그인</Link>
+            <button onClick={onClick}>로그아웃</button>
           )}
         </div>
         <div className="navham">

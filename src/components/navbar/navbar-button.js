@@ -21,7 +21,7 @@ export default function NavbarButton() {
   const router = useRouter();
 
   const onClick = useCallback(async () => {
-    await client.resetStore();
+    await client.clearStore();
     setLoggedin(false);
     router.refresh();
   }, [data]);
@@ -44,7 +44,7 @@ export default function NavbarButton() {
         </Link>
       ) : (
         <button onClick={onClick} className="navbar-button">
-          다른 아이디로 로그인하기
+          로그아웃
         </button>
       )}
     </div>
