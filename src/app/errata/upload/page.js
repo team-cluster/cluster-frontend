@@ -4,6 +4,7 @@
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { useCallback, useState, useEffect } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import Link from "next/link";
 
 const UPLOAD_MUTATION = gql`
   mutation Errata(
@@ -44,14 +45,6 @@ const QUERY_LIST = gql`
       link
       title
       updatedAt
-    }
-  }
-`;
-
-const DELETE_ERRATA = gql`
-  mutation Delete($id: ID!) {
-    removeErrata(errataId: $id) {
-      __typename
     }
   }
 `;
@@ -296,14 +289,6 @@ function GetCorrectionList() {
 
 function CorrectionMiniContent() {
   const { loading, error, data } = useQuery(QUERY_LIST);
-  const [mutation, set] = useMutation(DELETE_ERRATA);
-
-  const onClick = useCallback((id, mutation) => {
-    console.log(id);
-    mutation({ variables: { id: id } }).then((info) => {
-      console.log(info.data);
-    });
-  });
 
   return (
     <div>
@@ -336,12 +321,13 @@ function CorrectionMiniContent() {
                   <div className="md:text-lg text-base">
                     최근 변경일 : {parsedTime[0]}
                   </div>
-                  <button
-                    onClick={onClick(id, mutation)}
-                    className="p-3 w-fit text-lg text-red font-bold hover:bg-red hover:text-white"
+                  <Link
+                    href={`/errata/remove?id=${id}`}
+                    target="_blank"
+                    className="p-3 w-fit text-lg hover:text-red"
                   >
                     삭제하기
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
