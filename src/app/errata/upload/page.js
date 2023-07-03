@@ -64,7 +64,7 @@ export default function CorrectionUpload() {
     } else {
       setPermission(false);
     }
-  }, []);
+  }, [data]);
 
   console.log(data);
 
