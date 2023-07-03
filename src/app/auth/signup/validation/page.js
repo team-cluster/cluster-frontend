@@ -58,7 +58,7 @@ function Validated({ validationNumber, email }) {
         });
       }
     }
-  }, [resultmsg]);
+  }, []);
 
   return (
     <div className="flex flex-col justify-center items-center">
