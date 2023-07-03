@@ -15,7 +15,7 @@ import { setContext } from "@apollo/client/link/context";
 function makeClient() {
   const httpLink = new HttpLink({
     uri: process.env.GRAPHQL_ENDPOINT,
-    credentials: "same-origin",
+    credentials: "include",
   });
 
   return new NextSSRApolloClient({
