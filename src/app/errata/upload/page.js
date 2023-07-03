@@ -105,8 +105,6 @@ export default function CorrectionUpload() {
       })
     ).data;
 
-    console.log(uploadData);
-
     if (uploadData && uploadData.createErrata.__typename === "ErrataCreated") {
       alert("파일을 성공적으로 업로드했습니다.");
     } else if (
@@ -300,10 +298,11 @@ function CorrectionMiniContent() {
   const { loading, error, data } = useQuery(QUERY_LIST);
   const [mutation, set] = useMutation(DELETE_ERRATA);
 
-  const onClick = async (id) => {
+  const onClick = (id) => {
     console.log(id);
-    const result = (await mutation({ variables: { id: id } })).data;
-    console.log(result);
+    mutation({ variables: { id: id } }).then((info) => {
+      console.log(info.data);
+    });
   };
 
   return (
