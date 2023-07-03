@@ -49,7 +49,7 @@ const QUERY_LIST = gql`
 `;
 
 const DELETE_ERRATA = gql`
-  mutation Delete($id: String!) {
+  mutation Delete($id: ID!) {
     removeErrata(errataId: $id) {
       __typename
     }
