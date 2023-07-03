@@ -4,7 +4,6 @@
 import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import { useCallback, useState, useEffect } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { CorrectionMiniContent } from "../loadcontent";
 
 const UPLOAD_MUTATION = gql`
   mutation Errata(
