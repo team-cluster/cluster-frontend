@@ -6,7 +6,15 @@ import logo from "/public/logo/cluster-logo.png";
 import logoLabel from "/public/logo/cluster-label.png";
 import "./style.css";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { gql, useQuery } from "@apollo/client";
+const QUERY_USER = gql`
+  query UserQuery {
+    user {
+      __typename
+    }
+  }
+`;
 
 const navRoutes = [
   { label: "컨텐츠", route: "/content" },
