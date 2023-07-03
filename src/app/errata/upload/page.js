@@ -300,6 +300,15 @@ function CorrectionMiniContent() {
   const { loading, error, data } = useQuery(QUERY_LIST);
   const [mutation, set] = useMutation(DELETE_ERRATA);
 
+  const onClick = useCallback(
+    async (id) => {
+      console.log(id);
+      const result = (await mutation({ variables: { id: id } })).data;
+      console.log(result);
+    },
+    [mutation]
+  );
+
   return (
     <div>
       {loading ? (
@@ -332,12 +341,7 @@ function CorrectionMiniContent() {
                     최근 변경일 : {parsedTime[0]}
                   </div>
                   <button
-                    onClick={
-                      (useCallback(async () => {
-                        await mutation({ variables: { id: id } });
-                      }),
-                      [])
-                    }
+                    onClick={onClick(id)}
                     className="p-3 text-lg text-red font-bold"
                   >
                     삭제하기
