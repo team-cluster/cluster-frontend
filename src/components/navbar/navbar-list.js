@@ -46,9 +46,9 @@ export default function NavbarList() {
       <div className="navbar-mobile-buttons">
         <div className="navbar-userinfo">
           {isLogined ? (
-            <Link href="/member/login">로그인</Link>
+            <Link href="/auth/login">로그인</Link>
           ) : (
-            <Link href="/member">마이페이지</Link>
+            <Link href="/auth/login">다른 계정으로 로그인</Link>
           )}
         </div>
         <div className="navham">

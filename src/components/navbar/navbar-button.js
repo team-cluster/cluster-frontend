@@ -2,6 +2,7 @@
 
 import { gql, useQuery } from "@apollo/client";
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 const QUERY_USER = gql`
   query UserQuery {
@@ -17,14 +18,15 @@ import "./style.css";
 export default function NavbarButton() {
   const [loggedin, setLoggedin] = useState(false);
   const { client, loading, error, data } = useQuery(QUERY_USER);
+  const router = useRouter();
 
   const onClick = useCallback(async () => {
-    client.resetStore();
+    await client.resetStore();
     setLoggedin(false);
-  }, []);
+    router.refresh();
+  }, [data]);
 
   useEffect(() => {
-    console.log(data);
     if (data) {
       if (data.user.__typename === "Anonymous") {
         setLoggedin(false);
@@ -41,8 +43,8 @@ export default function NavbarButton() {
           로그인
         </Link>
       ) : (
-        <button onClick={() => onClick} className="navbar-button">
-          로그아웃
+        <button onClick={onClick} className="navbar-button">
+          다른 아이디로 로그인하기
         </button>
       )}
     </div>
